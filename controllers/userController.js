@@ -46,9 +46,9 @@ const loginUser = async (req, res) =>{
         if(decryptedPass === body.password) {
             res.sendStatus(200)
         }
-        res.sendStatus(400)
+        // res.sendStatus(400)
     }
-    res.sendStatus(400)
+    // res.sendStatus(400)
 }
 
 module.exports = {

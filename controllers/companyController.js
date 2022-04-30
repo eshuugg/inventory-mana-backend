@@ -52,6 +52,9 @@ const getTotalUser = async (req, res) => {
             include: {
                 model: Role,
                 as: 'role',
+            },
+            attributes: {
+                exclude: ['password']
             }
         },
         where: { id: id }
