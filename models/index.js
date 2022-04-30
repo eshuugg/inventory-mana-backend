@@ -38,6 +38,9 @@ db.product = require('./product.js')(sequelize, DataTypes)
 db.suppliers = require('./suppliers.js')(sequelize, DataTypes)
 db.stock = require('./stock')(sequelize, DataTypes)
 db.sellReport = require('./sellReport')(sequelize, DataTypes)
+db.company = require('./company')(sequelize, DataTypes)
+db.user = require('./user')(sequelize, DataTypes)
+db.role = require('./role')(sequelize, DataTypes)
 
 
 
@@ -47,7 +50,7 @@ db.sequelize.sync({ force: false })
     })
 
 
-// 1 to many relation of suppliers
+// 1 to many relation of suppliers and product
 db.product.hasMany(db.suppliers, {
     foreignKey: 'product_id',
     as: 'supplier'
@@ -59,27 +62,59 @@ db.suppliers.belongsTo(db.product, {
 })
 
 
-// 1 to 1 relation of stock
-db.product.hasOne(db.stock,{
+// 1 to 1 relation of stock and product
+db.product.hasOne(db.stock, {
     foreignKey: 'product_id',
-    as:'stock'
+    as: 'stock'
 })
 
-db.stock.belongsTo(db.product,{
+db.stock.belongsTo(db.product, {
     foreignKey: 'product_id',
-    as:'product'
-})
-
-
-//1 to many relation of sell
-db.product.hasMany(db.sellReport,{
-    foreignKey: 'productId',
-    as:'sellReport'
-})
-
-db.sellReport.belongsTo(db.product,{
-    foreignKey: 'productId',
     as: 'product'
 })
 
+
+//1 to many relation of product and sellreport
+db.product.hasMany(db.sellReport, {
+    foreignKey: 'product_id',
+    as: 'sellReport'
+})
+
+db.sellReport.belongsTo(db.product, {
+    foreignKey: 'product_id',
+    as: 'product'
+})
+
+//1 To many relation between company and product
+db.company.hasMany(db.product, {
+    foreignKey: 'company_id',
+    as: 'product'
+})
+
+db.product.belongsTo(db.company, {
+    foreignKey: 'company_id',
+    as: 'company'
+})
+
+// 1 to many relation  between company and user 
+db.company.hasMany(db.user,{
+    foreignKey:'company_id',
+    as:'user'
+})
+
+db.user.belongsTo(db.company,{
+    foreignKey:'company_id',
+    as:'company'
+})
+
+//1 to many relation between role and user
+db.role.hasMany(db.user, {
+    foreignKey: 'role_id',
+    as: 'user'
+})
+
+db.user.belongsTo(db.role, {
+    foreignKey: 'role_id',
+    as: 'role'
+})
 module.exports = db

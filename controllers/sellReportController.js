@@ -17,7 +17,7 @@ const addSellReport = async (req, res) => {
         })
         const stock = await Stock.findOne({
             where: {
-                product_id: body.productId
+                product_id: body.product_id
             }
         })
         await Stock.update({

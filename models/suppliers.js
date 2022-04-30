@@ -1,24 +1,27 @@
-module.exports = (sequelize, DataTypes) =>{
+module.exports = (sequelize, DataTypes) => {
 
-    const Supplier = sequelize.define("supplier",{
-        quantity:{
-            type:DataTypes.INTEGER,
+    const Supplier = sequelize.define("supplier", {
+        quantity: {
+            type: DataTypes.INTEGER,
             allowNull: false
         },
-        name:{
+        supplierName: {
             type: DataTypes.STRING
         },
-        supplyDate:{
+        supplyDate: {
             type: DataTypes.DATE
         },
-        rate:{
+        rate: {
             type: DataTypes.FLOAT
         },
-        tax:{
-            type:DataTypes.FLOAT
+        tax: {
+            type: DataTypes.FLOAT
         },
-        totalCost:{
-            type:DataTypes.FLOAT
+        totalCost: {
+            type: DataTypes.FLOAT
+        },
+        invoice_no: {
+            type: DataTypes.INTEGER
         }
     })
     return Supplier

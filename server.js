@@ -4,6 +4,9 @@ const productRouter = require('./routes/productRoutes')
 const supplierRouter = require('./routes/supplierRoutes')
 const stockRouter = require('./routes/stockRouter')
 const sellReportRouter = require('./routes/sellReportRouter')
+const companyRouter = require('./routes/companyRouter')
+const userRouter = require('./routes/userRouter')
+const roleRouter = require('./routes/roleRouter')
 const app = express()
 
 var corOption = {
@@ -25,9 +28,17 @@ app.use('/api/product', productRouter)
 
 app.use('/api/suppliers', supplierRouter)
 
-app.use('/api/stock', stockRouter )
+app.use('/api/stock', stockRouter)
 
-app.use('/api/sellReport', sellReportRouter )
+app.use('/api/sellReport', sellReportRouter)
+
+app.use('/api/company', companyRouter)
+
+app.use('/api/user', userRouter)
+
+app.use('/api/role', roleRouter)
+
+// app.use('/api/product/search')
 
 
 //testing api
@@ -35,6 +46,7 @@ app.use('/api/sellReport', sellReportRouter )
 app.get('/', (req, res) => {
     res.json({ message: 'Hello from api' })
 })
+
 
 
 //port

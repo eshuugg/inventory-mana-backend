@@ -8,7 +8,13 @@ module.exports = (sequelize, DataTypes) => {
         productType: {
             type: DataTypes.STRING
         },
-       
+        company_id: {
+            type: DataTypes.INTEGER
+        },
+        created_by: {
+            type: DataTypes.STRING
+        }
+
     })
 
     return Product
