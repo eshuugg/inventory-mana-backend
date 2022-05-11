@@ -1,6 +1,6 @@
 const db = require('../models')
 
-const SellReport = db.sellReport
+// const SellReport = db.sellReport
 const Stock = db.stock
 const Product = db.product
 
@@ -15,17 +15,17 @@ const addSellReport = async (req, res) => {
         await SellReport.create({
             ...body
         })
-        const stock = await Stock.findOne({
+        const stocks = await Stocks.findOne({
             where: {
                 product_id: body.product_id
             }
         })
-        await Stock.update({
-            ...stock,
-            quantity: stock.quantity - body.quantity
+        await Stocks.update({
+            ...stocks,
+            quantity: stocks.quantity - body.quantity
         }, {
             where: {
-                id: stock.id
+                id: stocks.id
             }
         })
    
@@ -34,21 +34,20 @@ const addSellReport = async (req, res) => {
 }
 
 
-const getSellReport = async (req, res) => {
+// const getSellReport = async (req, res) => {
 
-    const id = req.params.id
+//     const id = req.params.id
 
-    const totalSell = await Product.findAll({
-        include: [{
-            model: SellReport,
-            as: 'sellReport'
-        }],
-        where: { id: id }
-    })
-    res.status(200).send(totalSell)
-}
+//     const totalSell = await Product.findAll({
+//         include: [{
+//             model: SellReport,
+//             as: 'sellReport'
+//         }],
+//         where: { id: id }
+//     })
+//     res.status(200).send(totalSell)
+// }
 
 module.exports = {
-    getSellReport,
     addSellReport
 }

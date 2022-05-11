@@ -16,7 +16,6 @@ const sequelize = new Sequelize(
         min: dbConfig.pool.min,
         acquire: dbConfig.pool.acquire,
         idel: dbConfig.pool.idel
-
     }
 }
 )
@@ -36,7 +35,7 @@ db.sequelize = sequelize
 
 db.product = require('./product.js')(sequelize, DataTypes)
 db.suppliers = require('./suppliers.js')(sequelize, DataTypes)
-db.stock = require('./stock')(sequelize, DataTypes)
+db.stocks = require('./stocks')(sequelize, DataTypes)
 db.sellReport = require('./sellReport')(sequelize, DataTypes)
 db.company = require('./company')(sequelize, DataTypes)
 db.user = require('./user')(sequelize, DataTypes)
@@ -63,12 +62,12 @@ db.suppliers.belongsTo(db.product, {
 
 
 // 1 to 1 relation of stock and product
-db.product.hasOne(db.stock, {
+db.product.hasOne(db.stocks, {
     foreignKey: 'product_id',
-    as: 'stock'
+    as: 'stocks'
 })
 
-db.stock.belongsTo(db.product, {
+db.stocks.belongsTo(db.product, {
     foreignKey: 'product_id',
     as: 'product'
 })
@@ -97,14 +96,14 @@ db.product.belongsTo(db.company, {
 })
 
 // 1 to many relation  between company and user 
-db.company.hasMany(db.user,{
-    foreignKey:'company_id',
-    as:'user'
+db.company.hasMany(db.user, {
+    foreignKey: 'company_id',
+    as: 'user'
 })
 
-db.user.belongsTo(db.company,{
-    foreignKey:'company_id',
-    as:'company'
+db.user.belongsTo(db.company, {
+    foreignKey: 'company_id',
+    as: 'company'
 })
 
 //1 to many relation between role and user

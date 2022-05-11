@@ -3,11 +3,6 @@ const productController = require('../controllers/productController.js')
 const router = require('express').Router()
 
 router.post('/add', productController.addProduct)
-router.get('/list', productController.listOfAllProducts)
-
-//get product suppliers
-
-router.get('/get/:id', productController.getProductSuppliers)
 
 //get product Stocks
 
@@ -15,7 +10,7 @@ router.get('/getTotalStock/:id', productController.getTotalStock)
 
 //get sell Report
 
-router.get('/sell/:id', productController.getSellReport)
+router.get('/:id/sell', productController.getSellReport)
 
 //search product
 router.get('/search?name')

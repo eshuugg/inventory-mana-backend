@@ -1,10 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
 
-    const Stock = sequelize.define("stock", {
+    const Stocks = sequelize.define("stocks", {
         quantity: {
             type: DataTypes.INTEGER,
             allowNull: false
         }
     })
-    return Stock
+    return Stocks
 }

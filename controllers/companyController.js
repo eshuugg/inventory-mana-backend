@@ -1,7 +1,11 @@
 const db = require('../models')
 
+
 const Company = db.company
 const Product = db.product
+const Supplier = db.suppliers
+const SellReport = db.sellReport
+const Stocks = db.stocks
 const User = db.user
 const Role = db.role
 
@@ -22,24 +26,25 @@ const deleteCompany = async (req, res) => {
     const id = req.params.id
 
     await Company.destroy({ where: { id: id } })
-   
+
     res.sendStatus(200)
 }
-
 
 const getTotalProduct = async (req, res) => {
 
     const id = req.params.id
 
-    const totalProduct = await Company.findAll({
-        include: {
-            model: Product,
-            as: 'product'
-        },
-        where: { id: id }
+    const totalProduct = await Product.findAll({
+        include: [{
+            model: Supplier,
+            as: 'supplier',
+        }],
+        where: { company_id: id }
     })
     res.status(200).send(totalProduct)
 }
+
+
 
 const getTotalUser = async (req, res) => {
 
@@ -65,6 +70,31 @@ const getTotalUser = async (req, res) => {
 
 
 
+const getTotalProductInfo = async (req, res) => {
+
+    const { company_id, id } = req.params
+
+    const totalProduct = await Product.findOne({
+
+        include: [{
+            model: Supplier,
+            as: 'supplier',
+        }, {
+            model: SellReport,
+            as: 'sellReport',
+        }, {
+            model: Stocks,
+            as: 'stocks',
+        }],
+        where: {
+            id: id,
+            company_id: company_id
+        }
+
+    })
+    res.status(200).send(totalProduct)
+}
+
 
 
 
@@ -72,5 +102,6 @@ module.exports = {
     addCompany,
     getTotalProduct,
     getTotalUser,
+    getTotalProductInfo,
     deleteCompany
 }

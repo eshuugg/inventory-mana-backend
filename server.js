@@ -28,7 +28,7 @@ app.use('/api/product', productRouter)
 
 app.use('/api/suppliers', supplierRouter)
 
-app.use('/api/stock', stockRouter)
+app.use('/api/stocks', stockRouter)
 
 app.use('/api/sellReport', sellReportRouter)
 

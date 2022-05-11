@@ -22,20 +22,20 @@ const deleteUser = async (req, res) => {
     const id = req.params.id
 
     await User.destroy({ where: { id: id } })
-   
+
     res.sendStatus(200)
 }
 
 
-const loginUser = async (req, res) =>{
-    const {body} = req;
+const loginUser = async (req, res) => {
+    const { body } = req;
     const userInfo = await User.findOne({
         where: {
             email: body.email
         }
     })
 
-    if(userInfo && userInfo.dataValues) {
+    if (userInfo && userInfo.dataValues) {
         console.log(userInfo.dataValues.password);
         const decryptBytes = CryptoJS.AES.decrypt(userInfo.dataValues.password, 'secret key 123');
         console.log(decryptBytes)
@@ -43,12 +43,18 @@ const loginUser = async (req, res) =>{
         var decryptedPass = decryptBytes.toString(CryptoJS.enc.Utf8);
         console.log(decryptedPass)
 
-        if(decryptedPass === body.password) {
-            res.sendStatus(200)
+        if (decryptedPass === body.password) {
+            console.log(userInfo.dataValues)
+            res.status(200).send(userInfo)
         }
-        // res.sendStatus(400)
+        else {
+            res.sendStatus(400)
+        }
     }
-    // res.sendStatus(400)
+    else {
+        res.sendStatus(400)
+    }
+
 }
 
 module.exports = {

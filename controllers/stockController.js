@@ -1,11 +1,20 @@
 const db = require('../models')
 
 
-const Stock = db.stock
+const Stocks = db.stocks
 
 const listOfAllStock = async (req, res) => {
-    let stock = await Stock.findAll()
-    res.status(200).send(stock)
+    
+    const id = req.params.id
+
+    const totalStocks = await Product.findOne({
+        include: [{
+            model: Stocks,
+            as: 'stocks'
+        }],
+        where: { id: id }
+    })
+    res.status(200).send(totalStocks)
 }
 
 module.exports = {
